@@ -19,4 +19,15 @@ public class GameLogic {
         currentPlayer = 'X';
         gameWon = false;
     }
+
+    public boolean makeMove(int row, int col){
+        if(board[i][j]=='-' && !gameWon){
+            board[row][col] = currentPlayer;
+            gameWon = checkWin();
+            currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
+            return true;
+        }
+        return false;
+    }
+    
 }
