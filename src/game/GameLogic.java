@@ -29,5 +29,7 @@ public class GameLogic {
         }
         return false;
     }
-    
+    public boolean checkWin() {
+        return checkRows() || checkColumns() || checkDiagonals();
+    }
 }
