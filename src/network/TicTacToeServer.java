@@ -95,6 +95,11 @@ public class TicTacToeServer {
         game = null;
         waitingForPlayer = false;
     }
-    
+
+    public synchronized void broadcast(String message){
+        for(ClientHandler client : clients){
+            client.sendMessage(message);
+        }
+    }
 }
 
