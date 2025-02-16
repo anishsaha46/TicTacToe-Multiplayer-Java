@@ -87,4 +87,9 @@ public class GameLogic {
         }
         return copy;
     }
+
+    public void resetGame(){
+        resetBoard();
+        gameWon = false;
+    }
 }
