@@ -81,14 +81,14 @@ public class TicTacToeServer {
         }
     }
 
-    public synchronized removeClient(ClientHandler client){
+    public synchronized void removeClient(ClientHandler client){
         clients.remove(client);
         if(clients.size() ==1 ){
             broadcast("WAITING_FOR_PLAYER");
             waitingForPlayer = true;
             game = null;
         } else if(clients.isEmpty()){
-            resetGame;
+            resetGame();
         }
     }
     private synchronized void resetGame(){
