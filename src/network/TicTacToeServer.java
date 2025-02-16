@@ -65,5 +65,20 @@ public class TicTacToeServer {
         }
         return false;
     }
+
+    private synchronized void resetGameAndRestart() {
+        try{
+            Thread.sleep(2000);
+        } catch (InterruptedException e){
+            Thread.currentThread().interrupt();
+        }
+
+        if(clients.size() == 2){
+            startGame();
+        } else {
+            waitingForPlayer = true;
+            broadcast("WAITING_FOR_PLAYER");
+        }
+    }
 }
 
