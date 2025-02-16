@@ -101,5 +101,8 @@ public class TicTacToeServer {
             client.sendMessage(message);
         }
     }
-}
 
+    public static void main(String[] args) {
+        new TicTacToeServer(8000);
+    }
+}
