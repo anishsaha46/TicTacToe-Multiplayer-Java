@@ -45,4 +45,23 @@ public class ClientHandler extends Thread {
         }
     }
 
+    private void handleMove(String message) {
+        String[] parts=message.split(" ");
+        if(parts.length == 3){
+            try{
+                int row=Integer.parseInt(parts[1]);
+                int col=Integer.parseInt(parts[2]);
+                if(server.processMove(row, col, playerSymbol)){
+                    sendMessage("VALID_MOVE");
+                } else {
+                    sendMessage("INVALID_MOVE");
+                }
+            } catch(NumberFormatException e){
+                sendMessage("INVALID_MOVE");
+            }
+        } else {
+            sendMessage("INVALID_MOVE");
+        }
+    }
+
 }
