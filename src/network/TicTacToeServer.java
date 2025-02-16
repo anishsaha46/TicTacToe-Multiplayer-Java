@@ -43,5 +43,10 @@ public class TicTacToeServer {
             }
         }).start();
     }
-    
+
+    private synchronized void startGame() {
+        game = new GameLogic(); // Initialize game logic for a new game
+        broadcast("START");
+        waitingForPlayer = false;
+    }
 }
