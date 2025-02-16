@@ -49,4 +49,21 @@ public class TicTacToeServer {
         broadcast("START");
         waitingForPlayer = false;
     }
+
+    public synchronized boolean processMove(int row ,int col,char player){
+        if(game != null && game.getCurrentPlayer()==player && game.makeMove(row, col)){
+            broadcast("MOVE" + row + " " + col + " "+player);
+
+            if(game.isGameWon()){
+                broadcast("WIN" + player);
+                resetGameAndRestart();
+            } else if(game.isDraw()){
+                broadcast("DRAW");
+                resetGameAndRestart();
+            }
+            return true;
+        }
+        return false;
+    }
 }
+
