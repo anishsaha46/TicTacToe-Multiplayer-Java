@@ -34,4 +34,15 @@ public class ClientHandler extends Thread {
             cleanup();
         }
     }
+
+    private void processClientMessage(String message) {
+        if (message.startsWith("MOVE")) {
+            handleMove(message);
+        } else if (message.equals("DISCONNECT")) {
+            server.removeClient(this);
+        } else {
+            sendMessage("UNKNOWN_COMMAND");
+        }
+    }
+
 }
