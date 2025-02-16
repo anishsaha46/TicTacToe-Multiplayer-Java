@@ -80,5 +80,21 @@ public class TicTacToeServer {
             broadcast("WAITING_FOR_PLAYER");
         }
     }
+
+    public synchronized removeClient(ClientHandler client){
+        clients.remove(client);
+        if(clients.size() ==1 ){
+            broadcast("WAITING_FOR_PLAYER");
+            waitingForPlayer = true;
+            game = null;
+        } else if(clients.isEmpty()){
+            resetGame;
+        }
+    }
+    private synchronized void resetGame(){
+        game = null;
+        waitingForPlayer = false;
+    }
+    
 }
 
