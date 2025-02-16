@@ -81,6 +81,10 @@ public class GameLogic {
     }
 
     public char[][] getBoard() {
-        return board;
+        char[][] copy = new char[3][3];
+        for (int i = 0; i < 3; i++) {
+            System.arraycopy(board[i], 0, copy[i], 0, 3);
+        }
+        return copy;
     }
 }
