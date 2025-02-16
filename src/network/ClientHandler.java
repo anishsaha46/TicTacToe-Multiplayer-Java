@@ -85,5 +85,9 @@ public class ClientHandler extends Thread {
             e.printStackTrace();
         }
     }
-    
+
+    public char getPlayerSymbol() {
+        return playerSymbol;
+    }
+
 }
