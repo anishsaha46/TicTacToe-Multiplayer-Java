@@ -9,6 +9,7 @@ public class TicTacToeServer {
     private ServerSocket serverSocket;
     private final List<ClientHandler> clients = new ArrayList<>();
     private GameLogic game;
+    private boolean waitingForPlayer = false;
 
     public TicTacToeServer(int port) {
         try {
@@ -19,4 +20,28 @@ public class TicTacToeServer {
             e.printStackTrace();
         }
     }
+
+    private void acceptClients() {
+        new Thread(() -> {
+            while (true) { // Continuously accept clients
+                try {
+                    Socket clientSocket = serverSocket.accept();
+                    char playerSymbol = clients.size() % 2 == 0 ? 'X' : 'O';
+                    ClientHandler client = new ClientHandler(clientSocket, this, playerSymbol);
+                    clients.add(client);
+                    client.start();
+                    System.out.println("Player " + playerSymbol + " connected.");
+
+                    if (clients.size() == 2) {
+                        startGame();
+                    } else if (clients.size() == 1 && waitingForPlayer) {
+                        client.sendMessage("WAITING_FOR_PLAYER");
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+    
 }
