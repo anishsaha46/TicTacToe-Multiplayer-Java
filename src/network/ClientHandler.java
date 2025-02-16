@@ -70,4 +70,20 @@ public class ClientHandler extends Thread {
         }
     }
 
+    public void cleanup() {
+        try {
+            if (out != null) {
+                out.close();
+            }
+            if (in != null) {
+                in.close();
+            }
+            if (socket != null) {
+                socket.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
 }
