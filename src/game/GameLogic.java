@@ -21,16 +21,14 @@ public class GameLogic {
     }
 
     public boolean makeMove(int row, int col) {
-
-        if(row <0 || row >=3 || col <0 || col >=3){
-            return false;
+        if (row < 0 || row >= 3 || col < 0 || col >= 3) {
+            return false; // Invalid coordinates
         }
-
         if (board[row][col] == '-' && !gameWon) {
             board[row][col] = currentPlayer;
             gameWon = checkWin();
-            if(!gameWon && isDraw()){
-                gameWon = true;
+            if (!gameWon && isDraw()) {
+                gameWon = true; // Game is a draw
             }
             currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
             return true;
@@ -66,14 +64,14 @@ public class GameLogic {
     }
 
     public boolean isDraw() {
-        for(int i=0;i<3;i++){
-            for(int j=0;j<3;j++){
-                if(board[i][j]=='-'){
-                    return false;
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (board[i][j] == '-') {
+                    return false; // Board is not full
                 }
             }
         }
-        return true;
+        return true; // Board is full and no one has won
     }
 
     public char getCurrentPlayer() {
@@ -88,8 +86,16 @@ public class GameLogic {
         return copy;
     }
 
-    public void resetGame(){
+    public void resetGame() {
         resetBoard();
         gameWon = false;
+    }
+
+    public boolean isGameWon() {
+        return gameWon;
+    }
+
+    public boolean isGameDrawn() {
+        return isDraw() && gameWon;
     }
 }
