@@ -64,4 +64,10 @@ public class ClientHandler extends Thread {
         }
     }
 
+    public void sendMessage(String message) {
+        if(out != null){
+            out.println(message);
+        }
+    }
+
 }
