@@ -42,4 +42,9 @@ public class TicTacToeUI extends Application {
         executor.execute(this::listenForServerMessages);
     }
 
+    private void handleMove(int row, int col) {
+        if (board[row][col].getText().equals("-")) {  // Prevent duplicate moves
+            client.sendMove(row, col);
+        }
+    }
 }
