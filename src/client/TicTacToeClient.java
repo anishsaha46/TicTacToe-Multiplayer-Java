@@ -89,4 +89,34 @@ public class TicTacToeClient {
             closeConnection();
         }
     }
+
+    private void handleUserInput() {
+        Scanner scanner = new Scanner(System.in);
+        while (running) {
+            System.out.print("🎯 Enter your move (row col) or 'exit' to quit: ");
+            String input = scanner.nextLine();
+            if (input.equalsIgnoreCase("exit")) {
+                out.println("DISCONNECT");
+                running = false;
+                break;
+            }
+            try {
+                String[] parts = input.split(" ");
+                if (parts.length != 2) {
+                    System.out.println("⚠️ Invalid input. Please enter row and column numbers.");
+                    continue;
+                }
+                int row = Integer.parseInt(parts[0]);
+                int col = Integer.parseInt(parts[1]);
+                if (row < 0 || row >= 3 || col < 0 || col >= 3) {
+                    System.out.println("⚠️ Invalid move. Row and column must be between 0 and 2.");
+                    continue;
+                }
+                sendMove(row, col);
+            } catch (NumberFormatException e) {
+                System.out.println("⚠️ Invalid input. Please enter row and column numbers.");
+            }
+        }
+        scanner.close();
+    }
 }
