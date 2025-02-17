@@ -35,4 +35,8 @@ public class TicTacToeClient {
             closeConnection();
         }
     }
+
+    public void sendMove(int row, int col) {
+        out.println("MOVE " + row + " " + col);
+    }
 }
