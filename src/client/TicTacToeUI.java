@@ -6,12 +6,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
-import static jdk.internal.org.jline.terminal.Terminal.MouseTracking.Button;
 
 public class TicTacToeUI extends Application {
     private TicTacToeClient client;
