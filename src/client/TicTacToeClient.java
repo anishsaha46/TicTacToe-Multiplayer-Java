@@ -119,4 +119,15 @@ public class TicTacToeClient {
         }
         scanner.close();
     }
+
+    private void closeConnection() {
+        running = false;
+        try {
+            if (in != null) in.close();
+            if (out != null) out.close();
+            if (socket != null) socket.close();
+        } catch (IOException e) {
+            System.out.println("⚠️ Error closing resources.");
+        }
+    }
 }
