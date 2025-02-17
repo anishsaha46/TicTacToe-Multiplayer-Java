@@ -116,4 +116,10 @@ public class TicTacToeUI extends Application {
         }
         System.out.println("🎮 New game started!");
     }
+
+    @Override
+    public void stop() {
+        executor.shutdownNow();
+        System.out.println("Application closed.");
+    }
 }
