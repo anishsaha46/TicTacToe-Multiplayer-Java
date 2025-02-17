@@ -8,10 +8,8 @@ public class TicTacToeClient {
     private Socket socket;
     private PrintWriter out;
     private BufferedReader in;
-    private char playerSymbol;
     private boolean running = true;
 
-    
     public TicTacToeClient(String serverAddress, int port) {
         try {
             socket = new Socket(serverAddress, port);
@@ -20,7 +18,7 @@ public class TicTacToeClient {
 
             String welcomeMessage = in.readLine();
             if (welcomeMessage != null && welcomeMessage.startsWith("WELCOME")) {
-                playerSymbol = welcomeMessage.charAt(8);
+                char playerSymbol = welcomeMessage.charAt(8);
                 System.out.println("✅ You are player " + playerSymbol);
             } else {
                 System.out.println("⚠️ Server did not send a welcome message.");
@@ -40,58 +38,21 @@ public class TicTacToeClient {
         out.println("MOVE " + row + " " + col);
     }
 
-    public BufferedReader getIn() {
-        return in;
-    }
-
     private void listenForMessages() {
         try {
             String message;
             while ((message = in.readLine()) != null && running) {
-                switch (message.split(" ")[0]) {
-                    case "MOVE":
-                        System.out.println("🔄 Opponent moved: " + message);
-                        break;
-                    case "WIN":
-                        System.out.println("🏆 Player " + message.charAt(4) + " wins!");
-                        running = false;
-                        break;
-                    case "DRAW":
-                        System.out.println("🤝 The game is a draw.");
-                        running = false;
-                        break;
-                    case "START":
-                        System.out.println("🎮 Game started! You are player " + playerSymbol);
-                        break;
-                    case "WAITING_FOR_PLAYER":
-                        System.out.println("⌛ Waiting for another player to join...");
-                        break;
-                    case "MOVE_SUCCESS":
-                        System.out.println("✅ Your move was successful.");
-                        break;
-                    case "MOVE_FAILED":
-                        System.out.println("❌ Your move was invalid. Try again.");
-                        break;
-                    case "INVALID_MOVE":
-                        System.out.println("⚠️ Invalid move format. Please enter row and column numbers.");
-                        break;
-                    case "UNKNOWN_COMMAND":
-                        System.out.println("❓ Unknown command received from the server.");
-                        break;
-                    case "DISCONNECTED":
-                        System.out.println("❌ Your opponent has disconnected. Waiting for a new player...");
-                        running = false;
-                        break;
-                    default:
-                        System.out.println("🔄 Server: " + message);
-                        break;
-                }
+                handleServerMessage(message);
             }
         } catch (IOException e) {
             System.out.println("❌ Connection lost. Exiting...");
         } finally {
             closeConnection();
         }
+    }
+
+    private void handleServerMessage(String message) {
+        System.out.println("🔄 Server: " + message);
     }
 
     private void handleUserInput() {
@@ -136,8 +97,20 @@ public class TicTacToeClient {
     }
 
     public static void main(String[] args) {
-        new TicTacToeClient("localhost", 8080);
+        if (args.length < 1) {
+            System.out.println("Usage: java client.TicTacToeClient <serverAddress> <port>");
+            return;
+        }
+        String serverAddress = args[0];
+        int port = 8080; // Default port
+        if (args.length > 1) {
+            try {
+                port = Integer.parseInt(args[1]);
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid port number.");
+                return;
+            }
+        }
+        new TicTacToeClient(serverAddress, port);
     }
-
-
 }
