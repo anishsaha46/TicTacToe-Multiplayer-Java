@@ -47,4 +47,18 @@ public class TicTacToeUI extends Application {
             client.sendMove(row, col);
         }
     }
+
+    private void listenForServerMessages() {
+        try {
+            String message;
+            while ((message = client.getIn().readLine()) != null) {
+                handleServerMessage(message);
+            }
+        } catch (IOException e) {
+            System.out.println("❌ Connection lost. Exiting...");
+            Platform.runLater(() -> disableBoard("Connection lost!"));
+        } finally {
+            executor.shutdownNow();
+        }
+    }
 }
