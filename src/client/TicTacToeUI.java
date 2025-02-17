@@ -97,4 +97,13 @@ public class TicTacToeUI extends Application {
             }
         });
     }
+
+    private void disableBoard(String message) {
+        for (Button[] rowButtons : board) {
+            for (Button button : rowButtons) {
+                button.setDisable(true);
+            }
+        }
+        System.out.println(message);
+    }
 }
