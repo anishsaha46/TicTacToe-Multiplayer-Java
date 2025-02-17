@@ -103,6 +103,6 @@ public class TicTacToeServer {
     }
 
     public static void main(String[] args) {
-        new TicTacToeServer(8000);
+        new TicTacToeServer(8080);
     }
 }
