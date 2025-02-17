@@ -40,6 +40,10 @@ public class TicTacToeClient {
         out.println("MOVE " + row + " " + col);
     }
 
+    public BufferedReader getIn() {
+        return in;
+    }
+
     private void listenForMessages() {
         try {
             String message;
@@ -134,4 +138,6 @@ public class TicTacToeClient {
     public static void main(String[] args) {
         new TicTacToeClient("localhost", 8080);
     }
+
+
 }
