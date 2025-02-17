@@ -130,4 +130,8 @@ public class TicTacToeClient {
             System.out.println("⚠️ Error closing resources.");
         }
     }
+
+    public static void main(String[] args) {
+        new TicTacToeClient("localhost", 8080);
+    }
 }
