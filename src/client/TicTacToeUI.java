@@ -122,4 +122,11 @@ public class TicTacToeUI extends Application {
         executor.shutdownNow();
         System.out.println("Application closed.");
     }
+
+    public static void main(String[] args) {
+        TicTacToeClient client = new TicTacToeClient("localhost", 8080);
+        TicTacToeUI ui = new TicTacToeUI();
+        ui.setClient(client);
+        launch(args);
+    }
 }
