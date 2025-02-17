@@ -39,4 +39,54 @@ public class TicTacToeClient {
     public void sendMove(int row, int col) {
         out.println("MOVE " + row + " " + col);
     }
+
+    private void listenForMessages() {
+        try {
+            String message;
+            while ((message = in.readLine()) != null && running) {
+                switch (message.split(" ")[0]) {
+                    case "MOVE":
+                        System.out.println("🔄 Opponent moved: " + message);
+                        break;
+                    case "WIN":
+                        System.out.println("🏆 Player " + message.charAt(4) + " wins!");
+                        running = false;
+                        break;
+                    case "DRAW":
+                        System.out.println("🤝 The game is a draw.");
+                        running = false;
+                        break;
+                    case "START":
+                        System.out.println("🎮 Game started! You are player " + playerSymbol);
+                        break;
+                    case "WAITING_FOR_PLAYER":
+                        System.out.println("⌛ Waiting for another player to join...");
+                        break;
+                    case "MOVE_SUCCESS":
+                        System.out.println("✅ Your move was successful.");
+                        break;
+                    case "MOVE_FAILED":
+                        System.out.println("❌ Your move was invalid. Try again.");
+                        break;
+                    case "INVALID_MOVE":
+                        System.out.println("⚠️ Invalid move format. Please enter row and column numbers.");
+                        break;
+                    case "UNKNOWN_COMMAND":
+                        System.out.println("❓ Unknown command received from the server.");
+                        break;
+                    case "DISCONNECTED":
+                        System.out.println("❌ Your opponent has disconnected. Waiting for a new player...");
+                        running = false;
+                        break;
+                    default:
+                        System.out.println("🔄 Server: " + message);
+                        break;
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("❌ Connection lost. Exiting...");
+        } finally {
+            closeConnection();
+        }
+    }
 }
