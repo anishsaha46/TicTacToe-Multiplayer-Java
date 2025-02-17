@@ -106,4 +106,14 @@ public class TicTacToeUI extends Application {
         }
         System.out.println(message);
     }
+
+    private void resetBoard() {
+        for (Button[] rowButtons : board) {
+            for (Button button : rowButtons) {
+                button.setText("-");
+                button.setDisable(false);
+            }
+        }
+        System.out.println("🎮 New game started!");
+    }
 }
