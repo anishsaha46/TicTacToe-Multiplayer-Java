@@ -61,4 +61,40 @@ public class TicTacToeUI extends Application {
             executor.shutdownNow();
         }
     }
+
+    private void handleServerMessage(String message) {
+        Platform.runLater(() -> {
+            String[] parts = message.split(" ");
+            switch (parts[0]) {
+                case "MOVE":
+                    int row = Integer.parseInt(parts[1]);
+                    int col = Integer.parseInt(parts[2]);
+                    String symbol = parts[3];
+                    board[row][col].setText(symbol);
+                    board[row][col].setDisable(true);
+                    break;
+                case "WIN":
+                    disableBoard("🏆 Player " + parts[1] + " wins!");
+                    break;
+                case "DRAW":
+                    disableBoard("🤝 The game is a draw.");
+                    break;
+                case "START":
+                    resetBoard();
+                    break;
+                case "WAITING_FOR_PLAYER":
+                    disableBoard("⌛ Waiting for another player...");
+                    break;
+                case "MOVE_FAILED":
+                    System.out.println("❌ Invalid move! Try again.");
+                    break;
+                case "DISCONNECTED":
+                    disableBoard("❌ Opponent disconnected. Waiting for a new player...");
+                    break;
+                default:
+                    System.out.println("🔄 Server: " + message);
+                    break;
+            }
+        });
+    }
 }
